@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/data/jpa https://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    <!--DB 작업의 중심인 datasource Bean 등록-->
+    <bean id="datasource" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/ping?useUnicode=true&amp;characterEncoding=utf8&amp;sslMode=DISABLED"/>
+        <property name="username" value="gomdori"/>
+        <property name="password" value="mohitto4823"/>
+    </bean>
+
+    <!--JPA 레포지토리 스캔-->
+    <jpa:repositories base-package="Repository"/>
+
+    <!--JPA의 중심인 엔티티 매니저를 생성하는 팩토리 Bean 등록-->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <!--datasource로 DB 연결-->
+        <property name="dataSource" ref="datasource"/>
+
+        <!--JPA에 사용할 벤더 설정(Hibernate)-->
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+
+        <!--Entity 스캔 설정-->
+        <property name="packagesToScan" value="Domain"/>
+
+        <!--JPA 옵션 설정-->
+        <property name="jpaProperties">
+            <props>
+                <!--어떤 DB를 사용할 것인지 설정-->
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop>
+
+                <!--기타 옵션 설정-->
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.use_sql_comments">true</prop>
+                <prop key="hibernate.id.new_generator_mappings">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--어떤 어노테이션을 스캔할 것인지 설정-->
+    <context:component-scan base-package="Repository, Service">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
+    </context:component-scan>
+</beans>
