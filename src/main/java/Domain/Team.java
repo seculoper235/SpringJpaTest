@@ -16,4 +16,6 @@ public class Team {
     int id;
 
     String name;
+
+    String description;
 }

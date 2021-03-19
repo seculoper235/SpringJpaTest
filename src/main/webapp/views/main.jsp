@@ -12,5 +12,6 @@
 </head>
 <body>
 <h1>MAIN!</h1>
+<a href="/findteam/2">조회 테스트입니다!</a>
 </body>
 </html>
