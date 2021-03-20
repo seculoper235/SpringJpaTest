@@ -2,13 +2,15 @@ package Controller;
 
 import Domain.Team;
 import Service.TeamService;
+import org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+@RestController
 public class TeamController {
     private final TeamService teamService;
 
@@ -17,18 +19,15 @@ public class TeamController {
     }
 
     @GetMapping("/getteam/{id}")
-    public ModelAndView getTeamById(@PathVariable Integer id) {
+    public ResponseEntity<Team> getTeamById(@PathVariable Integer id) {
+
         Team team = teamService.getTeam(id);
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("team", team);
-        mav.setViewName("test");
-        return mav;
+        return ResponseEntity.ok(team);
     }
 
     @GetMapping("/findteam/{id}")
     public ModelAndView findTeamById(@PathVariable Integer id) {
         Team team = teamService.findTeam(id);
-        System.out.println("id = " + team.getId() + "name = " + team.getName() + "description = " + team.getDescription());
         ModelAndView mav = new ModelAndView();
         mav.addObject("team", team);
         mav.setViewName("test");

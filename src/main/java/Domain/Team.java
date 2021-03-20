@@ -1,15 +1,13 @@
 package Domain;
 
-import lombok.Data;
-import org.springframework.lang.Nullable;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
-@Data
-@Entity
+@Data @Entity
 @Table(name = "team")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

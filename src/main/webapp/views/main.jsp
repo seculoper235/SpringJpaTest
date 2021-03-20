@@ -13,5 +13,6 @@
 <body>
 <h1>MAIN!</h1>
 <a href="/getteam/2">getOne() 조회 테스트입니다!</a>
+<a href="/findteam/2">findBYId() 조회 테스트입니다!</a>
 </body>
 </html>

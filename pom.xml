@@ -102,6 +102,13 @@
       <version>2.3.4.RELEASE</version>
     </dependency>
 
+    <!-- REST 관련 -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.11.3</version>
+    </dependency>
+
     <!-- 기타 관련 -->
     <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
     <dependency>
